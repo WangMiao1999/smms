@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统商品入库</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>商品入库</span>
+                </div>
+                <div class="text item">
+
+                    <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                        class="demo-ruleForm">
+                        <el-form-item label="商品条形码：" prop="yonghum">
+                            <el-input v-model="ruleForm2.yonghum"></el-input>
+                        </el-form-item>
+                        <el-form-item label="数量：" prop="pass">
+                            <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input><br>
+                            <span>记重商品单位为千克</span>
+                        </el-form-item>
+                        <el-form-item label="进价：" prop="jinjia">
+                                <el-input v-model="ruleForm2.jinjia"></el-input>元
+                        </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm2')">入库</el-button>
+                                <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                            </el-form-item>
+                    </el-form>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                //自定义验证方法，判断密码和确认密码是否相等
+                var validatePass2 = (rule, value, callback) => {
+                   
+                    
+                };
+                return {
+                    labelPosition: 'top',
+                    ruleForm2: {
+                        pass: '',
+                        jinjia: '',
+                        yonghum: '',
+                    },
+                    rules2: {
+                        pass: [
+                            { required: true, message: "请输入数量", trigger: 'blur' },
+                          
+                        ],
+                        jinjia: [
+                            { required: true, message: "请输入进价", trigger: 'blur' },
+                            { validator: validatePass2, trigger: 'blur' }
+                        ],
+                        yonghum: [
+                            { required: true, message: "请输入条形码", trigger: 'blur' },
+                            { min: 5, max: 15, message: "条形码必须在5~15位之间" }
+                        
+                        ],
+                    }
+                };
+            },
+            //提交表单
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            //1. 表单验证通过就发起ajax请求到后端路由
+                            // console.log("前端的数据对象：",this.ruleForm2);
+                            $.post("/users/add", this.ruleForm2, function (result) {
+                                console.log(result);
+                            });
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                //重置表单
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+        })
+
+    //2. 后端路由接收前端的数据
+    //3. 链接数据库，把数据库写入数据库
+    //4. 返回处理的结果到前端
+    //5. 前端根据返回的结果处理业务逻辑 
+    </script>
+
+</body>
+
+
+</html>

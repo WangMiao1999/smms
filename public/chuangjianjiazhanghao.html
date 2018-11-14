@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账号管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+    <script src="/users/feifa"></script>
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>添加管理员账号</span>
+                </div>
+                <div class="text item">
+
+                    <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                        class="demo-ruleForm">
+                        <el-form-item label="用户名" prop="yonghum">
+                            <el-input v-model="ruleForm2.yonghum"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码" prop="pass">
+                            <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认密码" prop="checkPass">
+                            <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="用户组" prop="region">
+                            <el-select v-model="ruleForm2.region" placeholder="请选择用户组">
+                                <el-option label="经理" value="经理"></el-option>
+                                <el-option label="管理员" value="管理员"></el-option>
+                                <el-option label="用户" value="用户"></el-option>
+                            </el-select>
+                        </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+                                <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                            </el-form-item>
+                    </el-form>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                //自定义验证方法，判断密码和确认密码是否相等
+                var validatePass2 = (rule, value, callback) => {
+                    //如果密码和确认密码不相同，就抛出错误
+                    if (value !== this.ruleForm2.pass) {
+                        callback(new Error('两次输入密码不一致!'));
+                    } else {
+                        callback();
+                    }
+                };
+                return {
+                    labelPosition: 'top',
+                    ruleForm2: {
+                        pass: '',
+                        checkPass: '',
+                        yonghum: '',
+                        region: '',
+                    },
+                    rules2: {
+                        pass: [
+                            { required: true, message: "请输入密码", trigger: 'blur' },
+                            { min: 5, max: 15, message: "密码必须在5~15位之间" }
+                        ],
+                        checkPass: [
+                            { required: true, message: "请再次输入密码", trigger: 'blur' },
+                            { validator: validatePass2, trigger: 'blur' }
+                        ],
+                        yonghum: [
+                            { required: true, message: "请输入用户名", trigger: 'blur' },
+                            { min: 5, max: 15, message: "用户名必须在5~15位之间" }
+                        ],
+                        region: [
+                            { required: true, message: '请选择用户组', trigger: 'change' }
+                        ],
+                    }
+                };
+            },
+            //提交表单
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            //1. 表单验证通过就发起ajax请求到后端路由
+                            console.log("前端的数据对象：",this.ruleForm2);
+                            $.post("/users/add", this.ruleForm2, function (result) {
+                                if(result.isOk){
+                                   if(confirm("继续添加吗?")){
+                                       location.reload();
+                                   }
+                                   else{
+                                       location.href="zhanghaoguanli.html";
+                                   }
+                               }
+                               else{
+                                   alert(result.msg);
+                               }
+                            });
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                //重置表单
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+
+</html>

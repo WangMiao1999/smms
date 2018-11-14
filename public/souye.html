@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统登录</title>
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/ziji.css">
+
+
+</head>
+
+<body>
+    <div id="box">
+        <el-card class="box-card">
+            <!-- 表单标题 -->
+            <div slot="header" class="clearfix">
+                <h2>
+                    <span class="el-icon-edit-outline"> </span>超市管理系统</h2>
+            </div>
+            <!-- 登录框 -->
+            <div class="text item">
+                <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="用户名" prop="pass">
+                        <el-input v-model="ruleForm2.pass" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密 码" prop="checkPass">
+                        <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+                    </el-form-item>
+
+
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
+                        <el-button @click="resetForm('ruleForm2')">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+            <div>
+
+            </div>
+        </el-card>
+</body>
+<!-- 引入jquery -->
+<script src="./js/jquery.js"></script>
+<!-- 引入vue -->
+<script src="./js/vue.js"></script>
+<!-- 引入elementUI -->
+<script src="./js/elementUI.js"></script>
+<script>
+
+    new Vue({
+        el: "#box",
+        data() {
+            return {
+                ruleForm2: {
+                    pass: '',
+                    checkPass: '',
+
+                },
+                rules2: {
+                    pass: [
+                        { required: true, message: "请输入用户名", trigger: 'blur' },
+                        { min: 5, max: 12, message: "用户名名必须在5~12位之间" }
+                    ],
+                    checkPass: [
+                        { required: true, message: "请输入密码", trigger: 'blur' },
+                        { min: 5, max: 12, message: "密码名必须在5~12位之间" }
+                    ],
+
+                }
+            };
+        },
+        methods: {
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        // 1.前端表单验证通过后发起ajax请求到后端做验证
+                        $.post("/users/denglu", this.ruleForm2, function (result) {
+                            // 5.前端根据返回的结果处理业务逻辑
+                            if(result.isOk){
+                                alert(result.msg)
+                                location.href="shouye.html"
+                            }else{
+                                alert(result.msg)
+                            }
+                        })
+
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            resetForm(formName) {
+                this.$refs[formName].resetFields();
+            }
+        }
+    })
+
+
+
+
+</script>
+
+
+</html>

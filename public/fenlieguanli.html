@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账号管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>分类管理</span>
+                </div>
+                <div class="text item">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column label="编号">
+                                <template slot-scope="scope">
+                                    <el-tag>{{ scope.row.cg_id }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="名称">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.cg_name }}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="分类">
+                                <template slot-scope="scope">
+                                    <el-tag>{{ scope.row.cg_fatherID }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="管理">
+                                <template slot-scope="scope">
+                                    <el-button size="mini" @click="handleEdit(scope.row.cg_id)" type="primary" plain>
+                                        <i class="el-icon-edit"></i>编辑</el-button>
+                                    <el-button size="mini" @click="handleDelete(scope.row.cg_id)" type="danger" plain>
+                                        <i class="el-icon-delete"></i> 删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                return {
+                    tableData: []
+                }
+            }, 
+            methods: {
+                handleEdit(id) {
+                    console.log("编辑的id", id);
+                    location.href="bianjifenlei.html?id="+id;
+                },
+                handleDelete(id) {
+                    // console.log("删除的id", id);
+                    $.get("/category/shanchu",{id},(userlist)=>{
+                        console.log(userlist)
+                        if(userlist.isOk){
+                            this.fenlei();
+                        }else{
+                            alert(result.msg);
+                        }
+
+                    })
+                },
+                fenlei() {
+                    $.get("/category/list", (userlist) => {
+                        this.tableData = userlist;
+                        // console.log(userlist)
+
+                    })
+                },
+            },
+            mounted() {
+                this.fenlei();
+            }
+        })
+
+
+    </script>
+
+</body>
+
+
+</html>

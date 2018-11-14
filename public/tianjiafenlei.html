@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta cg_name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统添加分类</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+    <script src="/users/feifa"></script>
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>添加分类</span>
+                </div>
+                <div class="text item">
+
+                    <el-form :label-position="labelPosition" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+                        <el-form-item label="所属分类：" prop="cg_fatherID">
+                            <el-select v-model="ruleForm.cg_fatherID" placeholder="--请选择分类--">
+                                <el-option v-for="(c, index) in categoryList" :key="index" :label="c.cg_name" :value="c.cg_id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="分类名称：" prop="cg_name">
+                            <el-input v-model="ruleForm.cg_name"></el-input>
+                        </el-form-item>
+                        <el-form-item label="状态：" prop="cg_isLocked">
+                            <el-radio-group v-model="ruleForm.cg_isLocked">
+                                <el-radio value="1" label="1">启用</el-radio>
+                                <el-radio value="0" label="0">禁用</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
+                            <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        </el-form-item>
+                        </el-form-item>
+                </div>
+            </el-card>
+        </el-main>
+        </el-form>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                return {
+                    labelPosition: 'top',
+                    ruleForm: {
+                        cg_fatherID: '',
+                        cg_name: '',
+                        cg_isLocked: ""
+                    },
+                    categoryList:[],
+                    rules: {
+                        cg_name: [
+                            { required: true, message: '请输入分类名称', trigger: 'blur' },
+                    ],
+                    }
+                };
+            },
+            mounted(){
+                $.get("./category/xialakuang",(dataList)=>{
+                    this.categoryList=dataList;
+                })
+            },
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            $.post("/category/tianjiafenlei",this.ruleForm,function (result) {
+                               //处理业务逻辑 
+                               console.log(result);
+                               if(result.isOk){
+                                   if(confirm("继续添加吗?")){
+                                       location.reload();
+                                   }
+                                   else{
+                                       location.href="fenlieguanli.html";
+                                   }
+                               }
+                               else{
+                                   alert(result.msg);
+                               }
+                            });
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            },
+
+        })
+
+
+    </script>
+
+</body>
+
+
+</html>

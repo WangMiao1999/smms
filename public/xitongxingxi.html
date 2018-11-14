@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统首页</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>系统信息</span>
+                </div>
+                <div class="text item">
+                    <el-alert title="商品总数：5。已经销售的总金额：890.00。库存商品总价：1235.82" type="warning" show-icon>
+                    </el-alert>
+                    <el-alert show-icon id="daorushuju" title="导入数据" type="warning" :closable="false">
+                    </el-alert>
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <div class="grid-content bg-purple">
+                                <el-card class="box-card">
+                                    <div slot="header" class="clearfix">
+                                        <span>销售排行</span>
+                                    </div>
+                                    <div class="text item">
+                                        <template>
+                                            <el-table :data="tableData" stripe style="width: 100%">
+                                                <el-table-column prop="date" label="商品名称" width="180">
+                                                </el-table-column>
+                                                <el-table-column prop="address" label="销量">
+                                                </el-table-column>
+                                            </el-table>
+                                        </template>
+                                    </div>
+                                </el-card>
+                            </div>
+                        </el-col>
+                        <el-col :span="12">
+                            <div class="grid-content bg-purple-light">
+                                <div class="grid-content bg-purple">
+                                    <el-card class="box-card">
+                                        <div slot="header" class="clearfix">
+                                            <span>缺货的商品</span>
+                                        </div>
+                                        <div class="text item">
+                                            <template>
+                                                <el-table :data="tableData" stripe="true" style="width: 100%">
+                                                    <el-table-column prop="date" label="商品名称" width="180">
+                                                    </el-table-column>
+                                                    <el-table-column prop="name" label="库存" width="180">
+                                                    </el-table-column>
+                                                    <el-table-column prop="address" label="操作">
+                                                    </el-table-column>
+                                                </el-table>
+                                            </template>
+                                        </div>
+                                    </el-card>
+                                </div>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                return {
+                    tableData: [{
+                        date: '2016-05-02',
+                        name: '王小虎',
+                        address: ''
+                    }, {
+                        date: '2016-05-04',
+                        name: '王小虎',
+                        address: ''
+                    }, {
+                        date: '2016-05-01',
+                        name: '王小虎',
+                        address: ''
+                    }, {
+                        date: '2016-05-03',
+                        name: '王小虎',
+                        address: ''
+                    }]
+                }
+            }
+        })
+
+
+    </script>
+
+</body>
+
+
+</html>

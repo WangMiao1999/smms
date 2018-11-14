@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账销售列表</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>销售明细</span>
+                </div>
+                <div class="text item">
+                    <template>
+                            <div class="block shijian">
+                                    <span class="demonstration">开始时间:</span>
+                                    <el-date-picker
+                                      v-model="value6"
+                                      type="daterange"
+                                      range-separator="结束时间:"
+                                      start-placeholder="开始日期"
+                                      end-placeholder="结束日期">
+                                    </el-date-picker>
+                    </template>
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+                        <el-form-item class="guanjian" label="关键字：" prop="name">
+                            <el-input v-model="ruleForm.name"></el-input>
+                            商品名称，订单号，客户名字，会员卡号
+                            <el-button class="tianjia" type="success">
+                                <span>查询</span>
+                            </el-button>
+                        </el-form-item>
+                        </el-form-item>
+                        <template>
+                            <el-table :data="tableData" style="width: 100%">
+                                <el-table-column label="订单号">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.dingdanhao }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="名称">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.mingcheng }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="数量">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.shuliang }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="实际售价">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.shijishoujia }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="优惠（促销/会员)">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.youhui }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="退款">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.tuikuan }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="销售时间">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.xiaoshoushijian }}</span>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                        <el-pagination background layout="prev, pager, next" :total="1000">
+                        </el-pagination>
+                </div>
+
+
+
+
+                <!-- 引入jquery -->
+                <script src="./js/jquery.js"></script>
+                <!-- 引入vue -->
+                <script src="./js/vue.js"></script>
+                <!-- 引入elementUI -->
+                <script src="./js/elementUI.js"></script>
+
+                <script>
+                    new Vue({
+                        el: "#box",
+                        data() {
+           
+                            return {
+                               
+                                value6: '',
+                                ruleForm: {
+                                    name: '',
+                                },
+                               
+                                rules: {
+                                    name: [
+                                        { required: true, message: '请输入关键字', trigger: 'blur' },
+                                    ],
+                                },
+                                tableData: [{
+                                    dingdanhao: '2016-05-02',
+                                    mingcheng: "优乐美",
+                                    shuliang: "3",
+                                    shijishoujia: "24",
+                                    youhui: "2.00元/无",
+                                    tuikuan: "无退款",
+                                    xiaoshoushijian: "2012-01-17",
+                                    
+
+                                }, {
+                                    dingdanhao: '2016-05-02',
+                                    mingcheng: "优乐美",
+                                    shuliang: "3",
+                                    shijishoujia: "24",
+                                    youhui: "2.00元/无",
+                                    tuikuan: "无退款",
+                                    xiaoshoushijian: "2012-01-17",
+                                   
+                                }]
+                            };
+                        },
+                        methods: {
+                            submitForm(formName) {
+                                this.$refs[formName].validingdanhao((valid) => {
+                                    if (valid) {
+                                        alert('submit!');
+                                    } else {
+                                        console.log('error submit!!');
+                                        return false;
+                                    }
+                                });
+                            },
+                            resetForm(formName) {
+                                this.$refs[formName].resetFields();
+                            }
+                        }
+
+                    })
+
+
+                </script>
+
+</body>
+
+
+</html>

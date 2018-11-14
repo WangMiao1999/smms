@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账号管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>进货数据统计</span>
+                </div>
+                <div class="text item">
+                    <template>
+                        <div class="block">
+                            <span class="demonstration">时间：</span>
+                            <el-date-picker v-model="value5" type="datetimerange" :picker-options="pickerOptions2" range-separator="-" start-placeholder="开始日期"
+                                end-placeholder="结束日期" align="right">
+                            </el-date-picker>
+                            <el-button class="tianjia" type="success">
+                                    <span>查询</span>
+                            </el-button>
+                        </div>
+                    </template>
+
+
+                </div>
+
+
+
+
+                <!-- 引入jquery -->
+                <script src="./js/jquery.js"></script>
+                <!-- 引入vue -->
+                <script src="./js/vue.js"></script>
+                <!-- 引入elementUI -->
+                <script src="./js/elementUI.js"></script>
+
+                <script>
+                    new Vue({
+                        el: "#box",
+                        data() {
+                            return {
+                                pickerOptions2: {
+                                },
+                                value5: ''
+                            }
+                        }
+                    })
+
+
+                </script>
+
+</body>
+
+
+</html>

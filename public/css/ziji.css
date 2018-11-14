@@ -1,0 +1,27 @@
+/* 卡片 */
+.text {
+    font-size: 14px;
+}
+
+.item {
+    margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after {
+    clear: both
+}
+
+.box-card {
+    width: 480px;
+}
+/* 自定义 */
+body{background:#ccc}
+.el-card{position: absolute;bottom: 0;left: 0;top: 0;right: 0;margin: auto;height: 300px;
+
+}
+.el-card__header{padding:0 20px;}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta u_id="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账号管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+    
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>账号管理</span>
+                </div>
+                <div class="text item">
+                    <template>
+                        <el-table :data="tableData" style="width: 100%">
+                            <el-table-column label="编号">
+                                <template slot-scope="scope">
+                                    <el-tag>{{ scope.row.u_id }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="账号">
+                                <template slot-scope="scope">
+                                    <el-tag>{{ scope.row.userName }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="用户名组">
+                                <template slot-scope="scope">
+                                    <el-tag>{{ scope.row.userGroup }}</el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="日期" prop="createDatetime" :formatter="mydateFormat">
+                            </el-table-column>
+                            <el-table-column label="管理">
+                                <template slot-scope="scope">
+                                    <el-button size="mini" @click="handleEdit(scope.row.u_id)" type="primary" plain>
+                                        <i class="el-icon-edit"></i>编辑</el-button>
+                                    <el-button size="mini" type="danger" @click="handleDelete(scope.row.u_id)" plain>
+                                        <i class="el-icon-delete"></i>删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </template>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+    <!-- 引入moment时间格式化的js库 -->
+    <script src="./js/moment-with-locales.min.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() { 
+                return {
+                    tableData: []
+                }
+            },
+            methods: {
+                handleEdit(id) {
+                    console.log("编辑的id", id);
+                    
+                    location.href="bianjizhanghao.html?id="+id;// location.href ==> 跳转地点
+                },
+                handleDelete(id) {
+                    console.log("删除的id", id);
+
+                    $.get("/users/del/",{id},(result)=> {
+                        console.log(result);
+                        if(result.isOk){
+                            this.getDataAjax();
+                            //  alert(result.msg);
+                        }
+                        else{
+                            alert(result.msg);
+                        }
+                    })
+    
+                },
+                getDataAjax() {
+                    $.get("/users/list", (userlist) => {
+                        this.tableData = userlist;
+                    })
+                },
+                //格式化时间的方法
+                mydateFormat: function (row, column) {
+                    var date = row[column.property];
+                    if (date == undefined) {
+                        return "";
+                    }
+                    return moment(date).format("YYYY-MM-DD");
+                }
+            },
+            mounted() {
+                this.getDataAjax();
+            }
+        })
+    </script>
+</body>
+
+</html>

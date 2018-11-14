@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统商品管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>添加分类</span>
+                </div>
+                <div class="text item">
+                    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+                        <el-select v-model="ruleForm.region" placeholder="----选择分类----">
+                            <el-option label="--顶级分类--" value="shanghai"></el-option>
+                            <el-option label="--普通分类--" value="beijing"></el-option>
+
+                        </el-select>
+                        </el-form-item>
+                        <el-form-item class="guanjian" label="关键字：" prop="name">
+                            <el-input v-model="ruleForm.name"></el-input>
+                            (商品名称，条形码)
+                        </el-form-item>
+
+                        <el-button class="tianjia" type="success">
+                            <span>查询</span>
+                        </el-button>
+                        </el-form-item>
+
+                        <template>
+                            <el-table :data="tableData" style="width: 100%">
+                                <el-table-column label="商品条形码">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="商品名称">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.mingcheng }}</span>
+                                    </template>
+                                </el-table-column>
+                               
+                                <el-table-column size="medium" label="进价（元）">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.shoujia }}</span>
+                                    </template>
+                                </el-table-column>
+                                
+                                <el-table-column size="medium" label="入库">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.ruku }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="库存">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.kucun }}</span>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column size="medium" label="已售">
+                                    <template slot-scope="scope">
+                                        <i class="el-icon-time"></i>
+                                        <span style="margin-left: 10px">{{ scope.row.yishou }}</span>
+                                    </template>
+                                </el-table-column>
+                            
+
+                                <el-table-column label="管理" width="180">
+                                    <template slot-scope="scope">
+                                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)" type="primary" plain>
+                                            <i class="el-icon-edit"></i>编辑</el-button>
+                                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" plain>
+                                            <i class="el-icon-delete"></i>删除</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </template>
+                        <el-pagination background layout="prev, pager, next" :total="1000">
+                        </el-pagination>
+                </div>
+            </el-card>
+        </el-main>
+        </el-form>
+    </div>
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                return {
+                    ruleForm: {
+                        name: '',
+                        region: '',
+
+                    },
+                    rules: {
+                        name: [
+                            { required: true, message: '请输入关键字', trigger: 'blur' },
+
+                        ],
+                        region: [
+                            { required: true, message: '请选择所属分类', trigger: 'change' }
+                        ],
+                    },
+                    tableData: [{
+                        date: '2016-05-02',
+                        mingcheng: "我的优乐美",
+                        shoujia: "2.00",
+                        ruku: "2",
+                        kucun: "5",
+                        yishou: "35",
+                    }, {
+                        date: '2016-05-02',
+                        mingcheng: "我的优乐美",
+                        shoujia: "2.00",
+                        ruku: "2",
+                        kucun: "5",
+                        yishou: "35",
+                    }]
+                };
+            },
+            methods: {
+                handleEdit(index, row) {
+                    console.log(index, row);
+                },
+                handleDelete(index, row) {
+                    console.log(index, row);
+                },
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            alert('submit!');
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                }
+            }
+        })
+
+
+    </script>
+
+</body>
+
+
+</html>

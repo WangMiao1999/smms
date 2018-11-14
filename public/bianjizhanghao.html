@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统账号管理</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+
+</head>
+
+<body>
+    <div id="box">
+        <el-main>
+            <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>修改管理员账号</span>
+                </div>
+                <div class="text item">
+
+                    <el-form :label-position="labelPosition" :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+                        class="demo-ruleForm">
+                        <el-form-item label="用户名" prop="username">
+                            <el-input v-model="ruleForm2.username"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码" prop="pass">
+                            <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认密码" prop="checkPass">
+                            <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="用户组" prop="region">
+                            <el-select v-model="ruleForm2.region" placeholder="请选择用户组">
+                                <el-option label="经理" value="经理"></el-option>
+                                <el-option label="管理员" value="管理员"></el-option>
+                                <el-option label="用户" value="用户"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-card>
+        </el-main>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+                //自定义验证方法，判断密码和确认密码是否相等
+                var validatePass2 = (rule, value, callback) => {
+                    //如果密码和确认密码不相同，就抛出错误
+                    if (value !== this.ruleForm2.pass) {
+                        callback(new Error('两次输入密码不一致!'));
+                    } else {
+                        callback();
+                    }
+                };
+                return {
+                    labelPosition: 'top',
+                    ruleForm2: {
+                        pass: '',
+                        checkPass: '',
+                        username: '',
+                        region: '',
+                    },
+                    rules2: {
+                        pass: [
+                            { required: true, message: "请输入密码", trigger: 'blur' },
+                            { min: 5, max: 32, message: "密码必须在5~32位之间" }
+                        ],
+                        checkPass: [
+                            { required: true, message: "请再次输入密码", trigger: 'blur' },
+                            { validator: validatePass2, trigger: 'blur' }
+                        ],
+                        username: [
+                            { required: true, message: "请输入用户名", trigger: 'blur' },
+                            { min: 5, max: 15, message: "用户名必须在5~15位之间" }
+                        ],
+                        region: [
+                            { required: true, message: '请选择用户组', trigger: 'change' }
+                        ],
+                    }
+                };
+            },
+            //修改提交表单
+            methods: {
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            $.post("/users/save", this.ruleForm2, function (result) {
+                                if (result.isOk) {
+                                    alert(result.msg);
+                                    location.href = "zhanghaoguanli.html";
+                                }
+                                else {
+                                    alert(result.msg);
+                                    return false;
+                                }
+                            });
+                        }
+                        else {
+                            console.log("error submit!!");
+                            return false;
+                        }
+                    });
+                },
+            },
+            mounted() {
+                let reqUrl = location.href;
+                let id = reqUrl.split("=")[1];
+                console.log(id)
+                $.get("/users/getUserByID", { id }, (userData) => {
+                    console.log(userData);
+                    let data = userData[0];
+                    this.ruleForm2.username = data.userName;
+                    this.ruleForm2.pass = data.userPwd;
+                    this.ruleForm2.checkPass = data.userPwd
+                    this.ruleForm2.oldPwd = data.userPwd;
+                    this.ruleForm2.region = data.userGroup;
+                    this.ruleForm2.u_id = data.u_id;
+                });
+            }
+        })
+
+    </script>
+
+</body>
+
+
+</html>

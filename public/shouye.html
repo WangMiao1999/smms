@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>超市管理系统首页</title>
+    <!-- 清除样式 -->
+    <link rel="stylesheet" href="./css/qingchu.css">
+    <!-- 引入elementUI -->
+    <link rel="stylesheet" href="./css/elementUI.css">
+    <!-- 自己的样式 -->
+    <link rel="stylesheet" href="./css/shouye.css">
+    <script src="/users/feifa"></script>
+
+</head>
+
+<body>
+    <div id="box">
+        <el-container>
+            <!-- 左侧 -->
+            <el-aside width="230px">
+                <div id="biaoti">
+                    <h2>华联超市管理系统</h2>
+                    <p>
+                        <span style="color: dimgrey">您好</span> ，admin</p>
+                    <p>
+                        <a href="xitongxingxi.html" target="lianjie">管理首页 |</a>
+                        <a href="/users/tuichu"> 退出系统</a>
+                    </p>
+                </div>
+                <!-- 菜单 -->
+                <el-menu unique-opened default-active="8-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" default-active="8"
+                    class=".el-submenu.is-active .el-submenu__title">
+                    <!-- 1 -->
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>分类管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="1-1">
+                                <a href="fenlieguanli.html" target="lianjie">分类管理</a>
+                            </el-menu-item>
+                            <el-menu-item index="1-2">
+                                <a href="tianjiafenlei.html" target="lianjie">添加分类</a>
+                            </el-menu-item>
+
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 2 -->
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>商品管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="2-1">
+                                <a href="goods_list.html" target="lianjie">商品管理</a>
+                            </el-menu-item>
+                            <el-menu-item index="2-2">
+                                <a href="goods_add.html" target="lianjie">添加商品</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 3 -->
+                    <el-submenu index="3">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>进货管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="3-1">
+                                <a href="kucunguanli.html" target="lianjie">库存管理</a>
+                            </el-menu-item>
+                            <el-menu-item index="3-2">
+                                <a href="tianjiacunku.html" target="lianjie">添加库存</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 4 -->
+                    <el-submenu index="4">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>出货管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="4-1">
+                                <a href="xiaoshouliebiao.html" target="lianjie">销售列表</a>
+                            </el-menu-item>
+                            <el-menu-item index="4-2">
+                                <a href="" target="lianjie">商品出库</a>
+                            </el-menu-item>
+                            <el-menu-item index="4-3">
+                                <a href="shangpingtuihuo.html" target="lianjie">商品退货</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 5 -->
+                    <el-submenu index="5">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>统计管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="5-1">
+                                <a href="" target="lianjie">销售统计</a>
+                            </el-menu-item>
+                            <el-menu-item index="5-2">
+                                <a href="" target="lianjie">进货管理</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 6 -->
+                    <el-submenu index="6">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>账号管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="6-1">
+                                <a href="zhanghaoguanli.html" target="lianjie">账号管理</a>
+                            </el-menu-item>
+                            <el-menu-item index="6-2">
+                                <a href="chuangjianjiazhanghao.html" target="lianjie">添加账号</a>
+                            </el-menu-item>
+                            <el-menu-item index="6-3">
+                                <a href="xiugaimima.html" target="lianjie">修改密码</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 7 -->
+                    <el-submenu index="7">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>会员管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="7-1">
+                                <a href="" target="lianjie">系统信息</a>
+                            </el-menu-item>
+                            <el-menu-item index="7-2">
+                                <a href="" target="lianjie">添加账号</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+                    <!-- 8 -->
+                    <el-submenu index="8">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>系统管理</span>
+                        </template>
+                        <el-menu-item-group>
+                            <el-menu-item index="8-1">
+                                <a href="xitongxingxi.html" target="lianjie">系统信息</a>
+                            </el-menu-item>
+                            <el-menu-item index="8-2">
+                                <a href="">系统配置</a>
+                            </el-menu-item>
+                            <el-menu-item index="8-3">
+                                <a href="" target="lianjie">权限管理</a>
+                            </el-menu-item>
+                            <el-menu-item index="8-4">
+                                <a href="" target="lianjie">添加管理组</a>
+                            </el-menu-item>
+                        </el-menu-item-group>
+                    </el-submenu>
+
+                </el-menu>
+
+
+
+            </el-aside>
+            <el-container>
+                <!-- 右头 -->
+                <el-header height="124px">
+                    <h2>欢迎您 admin</h2>
+                    <span>查看详细的系统信息</span>
+                </el-header>
+                <!-- 右体 -->
+                <iframe src="xitongxingxi.html" name="lianjie" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe>
+                <!-- 右尾 -->
+                <el-footer height="51px">
+                    <p>&copy; copyright2018 华联超市管理系统</p>
+                </el-footer>
+            </el-container>
+        </el-container>
+    </div>
+
+
+
+
+    <!-- 引入jquery -->
+    <script src="./js/jquery.js"></script>
+    <!-- 引入vue -->
+    <script src="./js/vue.js"></script>
+    <!-- 引入elementUI -->
+    <script src="./js/elementUI.js"></script>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data() {
+            },
+            methods: {
+                handleOpen(key, keyPath) {
+                    // console.log(key, keyPath);
+                },
+                handleClose(key, keyPath) {
+                    // console.log(key, keyPath);
+                }
+            }
+
+        })
+
+
+    </script>
+
+</body>
+
+
+</html>
